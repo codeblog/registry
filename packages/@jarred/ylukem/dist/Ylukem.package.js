@@ -1,6 +1,6 @@
 "use strict";
 
-var _registry = require("/Users/jarred/.config/yarn/global/node_modules/codeblog//dist/registry");
+var _registry = require("/Users/jarred/code/codeblog/codeblog/dist/registry");
 
 // This file will eventually be compiled into a package.json by codeblog cli
 module.exports = {
