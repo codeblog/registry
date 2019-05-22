@@ -196,18 +196,22 @@ export default ({
     );
   } else {
     return (
-      <img
-        width={dimensions.width}
-        height={dimensions.height}
-        // Codeblog uses Emotion (https://emotion.sh) for CSS.
-        // This makes it easy to have styles that apply per component instead of to the whole page
-        css={css`
+      <a target="_blank" href={file}>
+        <img
+          width={width}
+          height={height}
+          // Codeblog uses Emotion (https://emotion.sh) for CSS.
+          // This makes it easy to have styles that apply per component instead of to the whole page
+          css={css`
           margin-block-start: var(--offset-normal);
           margin-block-end: var(--offset-normal);
-          width: ${file ? dimensions.width + "px" : "auto"};
-          height: ${file ? dimensions.height + "px" : "auto"};
+          max-width 100%;
+          height: auto;
+          text-decoration: none;
+          width: auto;
+          object-fit: contain;
+          max-height: 400px;
           border-radius: 2px;
-          max-width: 100%;
           object-fit: contain;
 
           @media (max-width: 670px) {
@@ -216,8 +220,9 @@ export default ({
             margin-right: calc(-1 * var(--offset-normal));
           }
         `}
-        src={file}
-      />
+          src={file}
+        />
+      </a>
     );
   }
 };
