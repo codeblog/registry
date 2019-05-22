@@ -1,11 +1,12 @@
 (function (global, factory) {
-  typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('@emotion/core'), require('react'), require('lodash')) :
-  typeof define === 'function' && define.amd ? define(['@emotion/core', 'react', 'lodash'], factory) :
-  (global = global || self, global['@jarred/confetti-button'] = factory(global['@emotion/core'], global.react, global.lodash));
-}(this, function (core, react, _) { 'use strict';
+  typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('@emotion/core'), require('react'), require('lodash'), require('tinycolor2')) :
+  typeof define === 'function' && define.amd ? define(['@emotion/core', 'react', 'lodash', 'tinycolor2'], factory) :
+  (global = global || self, global['@jarred/confetti-button'] = factory(global['@emotion/core'], global.react, global.lodash, global.tinycolor2));
+}(this, function (core, react, _, tinycolor) { 'use strict';
 
   react = react && react.hasOwnProperty('default') ? react['default'] : react;
   _ = _ && _.hasOwnProperty('default') ? _['default'] : _;
+  tinycolor = tinycolor && tinycolor.hasOwnProperty('default') ? tinycolor['default'] : tinycolor;
 
   function _typeof(obj) {
     if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
@@ -407,11 +408,6 @@
   });
   var Confetti = unwrapExports(confetti);
 
-  var _ref = {
-    name: "5gx472",
-    styles: "display:flex;margin-bottom:1em;align-items:center;justify-content:center;border:1px solid var(--color-primary);color:var(--color-primary);background-color:var(--page-background);font-weight:500;font-family:var(--headings-font);font-weight:500;font-size:14px;align-self:flex-start;max-width:200px;border-radius:4px;cursor:pointer;padding:6px 8px;&:hover{opacity:0.9;}&:active{opacity:0.8;}"
-  };
-
   var ConfettiButton =
   /*#__PURE__*/
   function (_React$Component) {
@@ -473,8 +469,10 @@
             otherProps = _objectWithoutProperties(_this$props, ["children", "firstColor", "secondColor", "thirdColor"]);
 
         return core.jsx("div", {
-          css: _ref,
-          onMouseUp: this.handleShowConfetti
+          css:
+          /*#__PURE__*/
+          core.css("display:flex;margin-bottom:1em;align-items:center;justify-content:center;border:1px solid var(--color-primary);color:var(--color-primary);background-color:", firstColor, ";color:", tinycolor(firstColor).isDark() ? "var(--color-white)" : "var(--color-black)", ";font-family:var(--headings-font);font-weight:500;font-size:16px;align-self:flex-start;width:100%;border-radius:4px;cursor:pointer;padding:8px 10px;&:hover{background-color:", tinycolor(firstColor).setAlpha(0.9).toRgbString(), ";}&:active{background-color:", tinycolor(firstColor).setAlpha(0.4).toRgbString(), ";}" + ("")),
+          onClick: this.handleShowConfetti
         }, "\uD83C\uDF89 Confetti me", core.jsx(Confetti, {
           active: this.state.showConfetti,
           threshold: 1,
