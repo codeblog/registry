@@ -76,28 +76,28 @@ function _nonIterableRest() {
   throw new TypeError("Invalid attempt to destructure non-iterable instance");
 }
 
-var isVerticalPhoto = function isVerticalPhoto(_ref) {
-  var width = _ref.width,
-      height = _ref.height;
-  return height > width;
-};
-var isHorizontalPhoto = function isHorizontalPhoto(_ref2) {
+var isVerticalPhoto = function isVerticalPhoto(_ref2) {
   var width = _ref2.width,
       height = _ref2.height;
-  return width > height;
+  return height > width;
 };
-var isSquarePhoto = function isSquarePhoto(_ref3) {
+var isHorizontalPhoto = function isHorizontalPhoto(_ref3) {
   var width = _ref3.width,
       height = _ref3.height;
+  return width > height;
+};
+var isSquarePhoto = function isSquarePhoto(_ref4) {
+  var width = _ref4.width,
+      height = _ref4.height;
   return width === height;
 };
-var calculateDimensions = function calculateDimensions(_ref4) {
-  var photo = _ref4.photo,
-      maxWidth = _ref4.maxWidth,
-      maxHeight = _ref4.maxHeight,
-      _ref4$totalPhotoCount = _ref4.totalPhotoCount,
-      totalPhotoCount = _ref4$totalPhotoCount === void 0 ? 1 : _ref4$totalPhotoCount,
-      defaultSpacing = _ref4.defaultSpacing;
+var calculateDimensions = function calculateDimensions(_ref5) {
+  var photo = _ref5.photo,
+      maxWidth = _ref5.maxWidth,
+      maxHeight = _ref5.maxHeight,
+      _ref5$totalPhotoCount = _ref5.totalPhotoCount,
+      totalPhotoCount = _ref5$totalPhotoCount === void 0 ? 1 : _ref5$totalPhotoCount,
+      defaultSpacing = _ref5.defaultSpacing;
   var MAX_COLUMN_COUNT = Math.min(totalPhotoCount, 3);
   var spacing = totalPhotoCount > 1 ? defaultSpacing : 0;
   var width,
@@ -164,15 +164,20 @@ var HiddenInputCSS = {
 }; // This is the React component that is shown your pad.
 // Since this is a Block component, be sure to render children. If you don't, things will break.
 
-var Image$1 = (function (_ref5) {
-  var children = _ref5.children,
-      onSave = _ref5.onSave,
-      _ref5$data = _ref5.data,
-      width = _ref5$data.width,
-      height = _ref5$data.height,
-      file = _ref5$data.file,
-      isInEditor = _ref5.isInEditor,
-      otherProps = _objectWithoutProperties(_ref5, ["children", "onSave", "data", "isInEditor"]);
+var _ref = {
+  name: "1iucz9",
+  styles: "margin-block-start:var(--offset-normal);margin-block-end:var(--offset-normal);max-width 100%;height:auto;text-decoration:none;width:auto;object-fit:contain;max-height:400px;border-radius:2px;object-fit:contain;@media (max-width:670px){max-width:100vw;margin-left:calc(-1 * var(--offset-normal));margin-right:calc(-1 * var(--offset-normal));}"
+};
+
+var Image$1 = (function (_ref6) {
+  var children = _ref6.children,
+      onSave = _ref6.onSave,
+      _ref6$data = _ref6.data,
+      width = _ref6$data.width,
+      height = _ref6$data.height,
+      file = _ref6$data.file,
+      isInEditor = _ref6.isInEditor,
+      otherProps = _objectWithoutProperties(_ref6, ["children", "onSave", "data", "isInEditor"]);
 
   var handleChangeFile = React.useCallback(function (evt) {
     var file = event.target.files[0];
@@ -186,12 +191,12 @@ var Image$1 = (function (_ref5) {
     }
 
     window.requestIdleCallback(function () {
-      Promise.all([getBase64File(file), getImageDimensions(file)]).then(function (_ref6) {
-        var _ref7 = _slicedToArray(_ref6, 2),
-            img = _ref7[0],
-            _ref7$ = _ref7[1],
-            width = _ref7$.width,
-            height = _ref7$.height;
+      Promise.all([getBase64File(file), getImageDimensions(file)]).then(function (_ref7) {
+        var _ref8 = _slicedToArray(_ref7, 2),
+            img = _ref8[0],
+            _ref8$ = _ref8[1],
+            width = _ref8$.width,
+            height = _ref8$.height;
 
         if (onSave) {
           onSave({
@@ -273,16 +278,17 @@ var Image$1 = (function (_ref5) {
       height: dimensions.height
     }));
   } else {
-    return jsx("img", {
-      width: dimensions.width,
-      height: dimensions.height // Codeblog uses Emotion (https://emotion.sh) for CSS.
+    return jsx("a", {
+      target: "_blank",
+      href: file
+    }, jsx("img", {
+      width: width,
+      height: height // Codeblog uses Emotion (https://emotion.sh) for CSS.
       // This makes it easy to have styles that apply per component instead of to the whole page
       ,
-      css:
-      /*#__PURE__*/
-      css("margin-block-start:var(--offset-normal);margin-block-end:var(--offset-normal);width:", file ? dimensions.width + "px" : "auto", ";height:", file ? dimensions.height + "px" : "auto", ";border-radius:2px;max-width:100%;object-fit:contain;@media (max-width:670px){max-width:100vw;margin-left:calc(-1 * var(--offset-normal));margin-right:calc(-1 * var(--offset-normal));}" + ("")),
+      css: _ref,
       src: file
-    });
+    }));
   }
 }); // If you want to...
 // - Supply default props
