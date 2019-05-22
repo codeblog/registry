@@ -1,14 +1,12 @@
 // A handful of common packages are included for you automatically.
 // If you want to add dependencies, add it in "dependencies" in /Users/jarred/Code/codeblog/some-components/DrawCanvas.package.js
-import React from "react";
-import { css } from "@emotion/core";
 import styled from "@emotion/styled";
-import tinycolor from "tinycolor2"; // This is a popular color library
+import React from "react";
 import DrawCanvas from "react-canvas-draw";
 
 const DRAW_CANVAS_DEFAULTS = {
   loadTimeOffset: 5,
-  lazyRadius: 30,
+  lazyRadius: 10,
   brushRadius: 4,
   brushColor: "#444",
   catenaryColor: "#0a0302",
