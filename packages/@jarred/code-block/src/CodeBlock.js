@@ -22,6 +22,8 @@ const Language = {
 };
 
 const CodeBlockCSS = css`
+  position: relative;
+
   .hljs {
     direction: ltr;
     text-align: left;
@@ -171,37 +173,6 @@ const unfocusedCSSBlock = css`
   right: 0;
 `;
 
-// // @ts-ignore
-// SyntaxHighlighter.registerLanguage(Language.jsx, jsx);
-// // @ts-ignore
-// SyntaxHighlighter.registerLanguage(Language.js, jsx);
-// // @ts-ignore
-// SyntaxHighlighter.registerLanguage(Language.javascript, jsx);
-// // @ts-ignore
-// SyntaxHighlighter.registerLanguage(Language.md, markdown);
-// // @ts-ignore
-// SyntaxHighlighter.registerLanguage(Language.markdown, markdown);
-// // @ts-ignore
-// SyntaxHighlighter.registerLanguage(Language.mdx, markdown);
-// // @ts-ignore
-// SyntaxHighlighter.registerLanguage(Language.ruby, ruby);
-// // @ts-ignore
-// SyntaxHighlighter.registerLanguage(Language.rb, ruby);
-// // @ts-ignore
-// SyntaxHighlighter.registerLanguage(Language.python, python);
-// // @ts-ignore
-// SyntaxHighlighter.registerLanguage(Language.py, python);
-// // @ts-ignore
-// SyntaxHighlighter.registerLanguage(Language.css, css);
-// // @ts-ignore
-// SyntaxHighlighter.registerLanguage(Language.stylesheet, css);
-// // @ts-ignore
-// SyntaxHighlighter.registerLanguage(Language.style, css);
-// // @ts-ignore
-// SyntaxHighlighter.registerLanguage(Language.ts, typescript);
-// // @ts-ignore
-// SyntaxHighlighter.registerLanguage(Language.typescript, typescript);
-
 export class CodeBlock extends React.Component {
   render() {
     const {
@@ -215,6 +186,8 @@ export class CodeBlock extends React.Component {
       data,
       ...otherProps
     } = this.props;
+
+    console.log(this.props);
 
     if (isInEditor) {
       return (
