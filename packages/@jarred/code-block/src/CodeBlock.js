@@ -233,7 +233,7 @@ export class CodeBlock extends React.Component {
             showLineNumbers={showLineNumbers}
             wrapLines
             useInlineStyles={false}
-            language={language}
+            language={undefined}
           >
             {this.props.text || ""}
           </SyntaxHighlighter>
