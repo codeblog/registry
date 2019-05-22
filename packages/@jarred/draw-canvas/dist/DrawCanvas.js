@@ -1,11 +1,12 @@
 (function (global, factory) {
-  typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('@emotion/styled-base'), require('@emotion/core'), require('react')) :
-  typeof define === 'function' && define.amd ? define(['@emotion/styled-base', '@emotion/core', 'react'], factory) :
-  (global = global || self, global['@jarred/draw-canvas'] = factory(global['@emotion/styled-base'], global['@emotion/core'], global.react));
-}(this, function (_styled, core, React) { 'use strict';
+  typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('@emotion/styled-base'), require('@emotion/core'), require('react'), require('tinycolor2'), require('lodash')) :
+  typeof define === 'function' && define.amd ? define(['@emotion/styled-base', '@emotion/core', 'react', 'tinycolor2', 'lodash'], factory) :
+  (global = global || self, global['@jarred/draw-canvas'] = factory(global['@emotion/styled-base'], global['@emotion/core'], global.react, global.tinycolor2, global.lodash));
+}(this, function (_styled, core, React, tinycolor2, lodash) { 'use strict';
 
   _styled = _styled && _styled.hasOwnProperty('default') ? _styled['default'] : _styled;
   var React__default = 'default' in React ? React['default'] : React;
+  tinycolor2 = tinycolor2 && tinycolor2.hasOwnProperty('default') ? tinycolor2['default'] : tinycolor2;
 
   function _typeof(obj) {
     if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
@@ -3186,7 +3187,7 @@
 
   var DRAW_CANVAS_DEFAULTS = {
     loadTimeOffset: 5,
-    lazyRadius: 10,
+    lazyRadius: 30,
     brushRadius: 4,
     brushColor: "#444",
     catenaryColor: "#0a0302",
@@ -3203,9 +3204,7 @@
     target: "e5i1odf0"
   })("position:relative;height:", function (props) {
     return props.height || 200;
-  }, "px;width:", function (props) {
-    return props.width ? props.width + "px" : "100%";
-  }, ";" + (""));
+  }, "px;canvas{max-width:100%;width:100%;object-fit:contain;}@media (max-width:670px){width:100vw;margin-left:calc(-1 * var(--offset-normal));margin-right:calc(-1 * var(--offset-normal));}" + (""));
 
   var GridLines = _styled("div", {
     target: "e5i1odf1"
@@ -3221,18 +3220,12 @@
   function (_React$Component) {
     _inherits(DrawSomething, _React$Component);
 
-    function DrawSomething() {
-      var _getPrototypeOf2;
-
+    function DrawSomething(props) {
       var _this;
 
       _classCallCheck(this, DrawSomething);
 
-      for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-        args[_key] = arguments[_key];
-      }
-
-      _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(DrawSomething)).call.apply(_getPrototypeOf2, [this].concat(args)));
+      _this = _possibleConstructorReturn(this, _getPrototypeOf(DrawSomething).call(this, props));
 
       _defineProperty(_assertThisInitialized(_this), "saveData", function () {
         console.log("CALL");
@@ -3246,50 +3239,91 @@
         }
       });
 
+      _defineProperty(_assertThisInitialized(_this), "getWidth", function () {
+        var docWidth = document.body.clientWidth;
+
+        if (docWidth < 700) {
+          return docWidth;
+        } else {
+          return 670;
+        }
+      });
+
+      _defineProperty(_assertThisInitialized(_this), "calculateWidth", function () {
+        if (_this.animationFrame) {
+          window.cancelAnimationFrame(_this.animationFrame);
+        }
+
+        _this.animationFrame = window.requestAnimationFrame(function () {
+          _this.setState({
+            width: _this.getWidth()
+          });
+        });
+      });
+
+      _defineProperty(_assertThisInitialized(_this), "handleResize", lodash.throttle(function () {
+        _this.calculateWidth();
+      }, 50));
+
       _defineProperty(_assertThisInitialized(_this), "setCanvasRef", function (canvasRef) {
         return _this.canvasRef = canvasRef;
       });
+
+      if (props.isInEditor) {
+        _this.state = {
+          width: 670
+        };
+      } else {
+        _this.state = {
+          width: _this.getWidth()
+        };
+      }
 
       return _this;
     }
 
     _createClass(DrawSomething, [{
+      key: "componentDidMount",
+      value: function componentDidMount() {
+        window.addEventListener("resize", this.handleResize);
+      }
+    }, {
+      key: "componentWillUnmount",
+      value: function componentWillUnmount() {
+        window.removeEventListener("resize", this.handleResize);
+
+        if (this.animationFrame) {
+          window.cancelAnimationFrame(this.animationFrame);
+        }
+
+        this.handleResize.cancel();
+      }
+    }, {
       key: "render",
       value: function render() {
         var _this$props = this.props,
             isInEditor = _this$props.isInEditor,
-            onSave = _this$props.onSave,
             _this$props$data$save = _this$props.data.saveData,
             saveData = _this$props$data$save === void 0 ? undefined : _this$props$data$save,
-            brushColor = _this$props.brushColor,
-            isFocused = _this$props.isFocused,
-            isSelected = _this$props.isSelected;
-        var width = 650;
-
-        if (document.body.clientWidth < 600) {
-          width = document.body.clientWidth - 2;
-        }
+            brushColor = _this$props.brushColor;
 
         if (isInEditor) {
           return core.jsx(Container, {
             onMouseOut: this.saveData,
-            width: width,
             ref: this.containerRef
           }, core.jsx(_default, _extends({}, DRAW_CANVAS_DEFAULTS, {
             ref: this.setCanvasRef,
             saveData: saveData,
-            canvasWidth: width,
+            canvasWidth: this.state.width,
             brushColor: brushColor,
             immediateLoading: true
           })), core.jsx(GridLines, null), this.props.children);
         } else {
-          return core.jsx(Container, {
-            width: width
-          }, core.jsx(_default, _extends({}, DRAW_CANVAS_DEFAULTS, {
+          return core.jsx(Container, null, core.jsx(_default, _extends({}, DRAW_CANVAS_DEFAULTS, {
             ref: this.setCanvasRef,
             disabled: false,
             saveData: saveData,
-            canvasWidth: width,
+            canvasWidth: this.state.width,
             brushColor: brushColor
           })), core.jsx(GridLines, null), this.props.children);
         }
