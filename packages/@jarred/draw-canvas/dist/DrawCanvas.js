@@ -1,12 +1,11 @@
 (function (global, factory) {
-  typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('@emotion/styled-base'), require('@emotion/core'), require('react'), require('tinycolor2')) :
-  typeof define === 'function' && define.amd ? define(['@emotion/styled-base', '@emotion/core', 'react', 'tinycolor2'], factory) :
-  (global = global || self, global['@jarred/draw-canvas'] = factory(global['@emotion/styled-base'], global['@emotion/core'], global.react, global.tinycolor2));
-}(this, function (_styled, core, React, tinycolor2) { 'use strict';
+  typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('@emotion/styled-base'), require('@emotion/core'), require('react')) :
+  typeof define === 'function' && define.amd ? define(['@emotion/styled-base', '@emotion/core', 'react'], factory) :
+  (global = global || self, global['@jarred/draw-canvas'] = factory(global['@emotion/styled-base'], global['@emotion/core'], global.react));
+}(this, function (_styled, core, React) { 'use strict';
 
   _styled = _styled && _styled.hasOwnProperty('default') ? _styled['default'] : _styled;
   var React__default = 'default' in React ? React['default'] : React;
-  tinycolor2 = tinycolor2 && tinycolor2.hasOwnProperty('default') ? tinycolor2['default'] : tinycolor2;
 
   function _typeof(obj) {
     if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
@@ -3187,7 +3186,7 @@
 
   var DRAW_CANVAS_DEFAULTS = {
     loadTimeOffset: 5,
-    lazyRadius: 30,
+    lazyRadius: 10,
     brushRadius: 4,
     brushColor: "#444",
     catenaryColor: "#0a0302",
