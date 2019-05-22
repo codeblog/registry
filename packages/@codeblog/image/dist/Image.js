@@ -1,28 +1,10 @@
 (function (global, factory) {
-  typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('@emotion/core'), require('react')) :
-  typeof define === 'function' && define.amd ? define(['@emotion/core', 'react'], factory) :
-  (global = global || self, global['@codeblog/image'] = factory(global['@emotion/core'], global.react));
-}(this, function (core, React) { 'use strict';
+  typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@emotion/core'), require('react'), require('lodash')) :
+  typeof define === 'function' && define.amd ? define(['exports', '@emotion/core', 'react', 'lodash'], factory) :
+  (global = global || self, factory(global['@codeblog/image'] = {}, global['@emotion/core'], global.react, global.lodash));
+}(this, function (exports, core, React, lodash) { 'use strict';
 
   React = React && React.hasOwnProperty('default') ? React['default'] : React;
-
-  function _extends() {
-    _extends = Object.assign || function (target) {
-      for (var i = 1; i < arguments.length; i++) {
-        var source = arguments[i];
-
-        for (var key in source) {
-          if (Object.prototype.hasOwnProperty.call(source, key)) {
-            target[key] = source[key];
-          }
-        }
-      }
-
-      return target;
-    };
-
-    return _extends.apply(this, arguments);
-  }
 
   function _objectWithoutPropertiesLoose(source, excluded) {
     if (source == null) return {};
@@ -98,6 +80,56 @@
     throw new TypeError("Invalid attempt to destructure non-iterable instance");
   }
 
+  var isVerticalPhoto = function isVerticalPhoto(_ref) {
+    var width = _ref.width,
+        height = _ref.height;
+    return height > width;
+  };
+  var isHorizontalPhoto = function isHorizontalPhoto(_ref2) {
+    var width = _ref2.width,
+        height = _ref2.height;
+    return width > height;
+  };
+  var isSquarePhoto = function isSquarePhoto(_ref3) {
+    var width = _ref3.width,
+        height = _ref3.height;
+    return width === height;
+  };
+  var calculateDimensions = function calculateDimensions(_ref4) {
+    var photo = _ref4.photo,
+        maxWidth = _ref4.maxWidth,
+        maxHeight = _ref4.maxHeight,
+        _ref4$totalPhotoCount = _ref4.totalPhotoCount,
+        totalPhotoCount = _ref4$totalPhotoCount === void 0 ? 1 : _ref4$totalPhotoCount,
+        defaultSpacing = _ref4.defaultSpacing;
+    var MAX_COLUMN_COUNT = Math.min(totalPhotoCount, 3);
+    var spacing = totalPhotoCount > 1 ? defaultSpacing : 0;
+    var width,
+        height = 0;
+
+    if (photo.width > photo.height) {
+      var MAX_SIZE = maxWidth / MAX_COLUMN_COUNT - spacing * MAX_COLUMN_COUNT;
+      width = Math.min(photo.width, MAX_SIZE) - spacing;
+      height = photo.height * (width / photo.width);
+    } else if (photo.height > photo.width) {
+      var _MAX_SIZE = maxHeight / MAX_COLUMN_COUNT - spacing * MAX_COLUMN_COUNT;
+
+      height = Math.min(photo.height, _MAX_SIZE);
+      width = photo.width * (height / photo.height);
+    } else {
+      var _MAX_SIZE2 = maxHeight / MAX_COLUMN_COUNT - spacing * MAX_COLUMN_COUNT;
+
+      width = Math.min(photo.width, _MAX_SIZE2) - spacing;
+      height = Math.min(photo.height, _MAX_SIZE2) - spacing;
+    }
+
+    return {
+      width: width,
+      height: height,
+      spacing: spacing
+    };
+  };
+
   function getBase64File(file) {
     return new Promise(function (resolve, reject) {
       var reader = new FileReader();
@@ -120,8 +152,8 @@
 
       img.onload = function () {
         resolve({
-          width: img.naturalWidth,
-          height: img.naturalHeight
+          width: img.naturalWidth / (window.devicePixelRatio || 1),
+          height: img.naturalHeight / (window.devicePixelRatio || 1)
         });
         URL.revokeObjectURL(img.src);
       };
@@ -136,25 +168,15 @@
   }; // This is the React component that is shown your pad.
   // Since this is a Block component, be sure to render children. If you don't, things will break.
 
-  var _ref = {
-    name: "79elbk",
-    styles: "position:relative;"
-  };
-
-  var _ref2 = {
-    name: "xei093",
-    styles: "border-radius:2px;width:auto;max-width:var(--blog-post-width);height:auto;object-fit:contain;"
-  };
-
-  var Image$1 = (function (_ref3) {
-    var children = _ref3.children,
-        onSave = _ref3.onSave,
-        _ref3$data = _ref3.data,
-        width = _ref3$data.width,
-        height = _ref3$data.height,
-        file = _ref3$data.file,
-        isInEditor = _ref3.isInEditor,
-        otherProps = _objectWithoutProperties(_ref3, ["children", "onSave", "data", "isInEditor"]);
+  var Image$1 = (function (_ref5) {
+    var children = _ref5.children,
+        onSave = _ref5.onSave,
+        _ref5$data = _ref5.data,
+        width = _ref5$data.width,
+        height = _ref5$data.height,
+        file = _ref5$data.file,
+        isInEditor = _ref5.isInEditor,
+        otherProps = _objectWithoutProperties(_ref5, ["children", "onSave", "data", "isInEditor"]);
 
     var handleChangeFile = React.useCallback(function (evt) {
       var file = event.target.files[0];
@@ -168,12 +190,12 @@
       }
 
       window.requestIdleCallback(function () {
-        Promise.all([getBase64File(file), getImageDimensions(file)]).then(function (_ref4) {
-          var _ref5 = _slicedToArray(_ref4, 2),
-              img = _ref5[0],
-              _ref5$ = _ref5[1],
-              width = _ref5$.width,
-              height = _ref5$.height;
+        Promise.all([getBase64File(file), getImageDimensions(file)]).then(function (_ref6) {
+          var _ref7 = _slicedToArray(_ref6, 2),
+              img = _ref7[0],
+              _ref7$ = _ref7[1],
+              width = _ref7$.width,
+              height = _ref7$.height;
 
           if (onSave) {
             onSave({
@@ -186,34 +208,85 @@
       });
     }, [onSave]);
 
+    var _React$useState = React.useState({
+      width: width,
+      height: height
+    }),
+        _React$useState2 = _slicedToArray(_React$useState, 2),
+        dimensions = _React$useState2[0],
+        setDimensions = _React$useState2[1];
+
+    var getDimensions = function getDimensions() {
+      var maxWidth;
+      var docWidth = document.body.clientWidth;
+
+      if (docWidth < 700) {
+        maxWidth = docWidth;
+      } else {
+        maxWidth = 670;
+      }
+
+      setDimensions(calculateDimensions({
+        photo: {
+          width: width,
+          height: height
+        },
+        totalPhotoCount: 1,
+        maxHeight: 400,
+        maxWidth: maxWidth
+      }));
+    };
+
+    React.useEffect(function () {
+      var frame;
+      var handleResize = lodash.throttle(function () {
+        console.log("RESIZE");
+        frame = window.requestAnimationFrame(getDimensions);
+      }, 50);
+      window.addEventListener("resize", handleResize);
+      return function () {
+        window.removeEventListener("resize", handleResize);
+        window.cancelAnimationFrame(frame);
+      };
+    }, []);
+    React.useLayoutEffect(function () {
+      getDimensions();
+    }, [file, width, height, setDimensions]);
+
     if (isInEditor) {
       return core.jsx("div", {
-        css: _ref,
+        css:
+        /*#__PURE__*/
+        core.css("position:relative;margin-block-start:var(--offset-normal);margin-block-end:var(--offset-normal);width:", file ? dimensions.width + "px" : "auto", ";height:", file ? dimensions.height + "px" : "auto", ";@media (max-width:670px){max-width:100vw;margin-left:calc(-1 * var(--offset-normal));margin-right:calc(-1 * var(--offset-normal));}max-width:100%;" + ("")),
         className: "Container"
       }, file && core.jsx("img", {
         // Codeblog uses Emotion (https://emotion.sh) for CSS.
         // This makes it easy to have styles that apply per component instead of to the whole page
-        css: _ref2,
+        css:
+        /*#__PURE__*/
+        core.css("border-radius:2px;max-width:100%;width:", file ? dimensions.width + "px" : "auto", ";height:", file ? dimensions.height + "px" : "auto", ";@media (max-width:670px){max-width:100vw;width:100%;}" + ("")),
         src: file,
-        width: width,
-        height: height
+        width: dimensions.width,
+        height: dimensions.height
       }), core.jsx("input", {
         type: "file",
         accept: "image/*",
         css: file && width && height ? HiddenInputCSS : undefined,
-        onChange: handleChangeFile
+        onChange: handleChangeFile,
+        width: dimensions.width,
+        height: dimensions.height
       }));
     } else {
-      return core.jsx("img", _extends({}, otherProps, {
-        width: width,
-        height: height // Codeblog uses Emotion (https://emotion.sh) for CSS.
+      return core.jsx("img", {
+        width: dimensions.width,
+        height: dimensions.height // Codeblog uses Emotion (https://emotion.sh) for CSS.
         // This makes it easy to have styles that apply per component instead of to the whole page
         ,
         css:
         /*#__PURE__*/
-        core.css("border-radius:2px;width:", width || "auto", ";height:", height || "auto", ";max-width:100%;object-fit:contain;" + ("")),
+        core.css("margin-block-start:var(--offset-normal);margin-block-end:var(--offset-normal);width:", file ? dimensions.width + "px" : "auto", ";height:", file ? dimensions.height + "px" : "auto", ";border-radius:2px;max-width:100%;object-fit:contain;@media (max-width:670px){max-width:100vw;margin-left:calc(-1 * var(--offset-normal));margin-right:calc(-1 * var(--offset-normal));}" + ("")),
         src: file
-      }));
+      });
     }
   }); // If you want to...
   // - Supply default props
@@ -222,6 +295,12 @@
   // Edit this file:
   // 📦/Users/jarred/Code/codeblog/some-components/Image.package.js
 
-  return Image$1;
+  exports.calculateDimensions = calculateDimensions;
+  exports.default = Image$1;
+  exports.isHorizontalPhoto = isHorizontalPhoto;
+  exports.isSquarePhoto = isSquarePhoto;
+  exports.isVerticalPhoto = isVerticalPhoto;
+
+  Object.defineProperty(exports, '__esModule', { value: true });
 
 }));
