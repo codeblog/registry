@@ -12,7 +12,11 @@ module.exports = {
     title: "Photo",
     description: "An image. One of those picture things.",
     // This is optional but recommended. If the file doesn't exist, it will be ignored.
-    screenshot: "./image.png",
+    screenshot: {
+      "1x": "https://storage.googleapis.com/codeblog-public/Photo.png",
+      "2x": "https://storage.googleapis.com/codeblog-public/Photo@2x.png",
+      "3x": "https://storage.googleapis.com/codeblog-public/Photo@3x.png"
+    },
     // If you use CategoryType.text, the component will be used on existing text, e.g. Glitter or Highlight. This is an inline.
     // if you use CategoryType.header, the component will be used on a new block, e.g. the Fancy Header or Quote.
     category: _registry.CategoryType.block,
