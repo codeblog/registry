@@ -2,6 +2,7 @@ import Confetti from "react-dom-confetti";
 import React from "react";
 import _ from "lodash";
 import { css } from "@emotion/core";
+import tinycolor from "tinycolor2";
 
 export default class ConfettiButton extends React.Component {
   confettiTimer = null;
@@ -44,25 +45,31 @@ export default class ConfettiButton extends React.Component {
           justify-content: center;
           border: 1px solid var(--color-primary);
           color: var(--color-primary);
-          background-color: var(--page-background);
-          font-weight: 500;
+          background-color: ${firstColor};
+          color: ${tinycolor(firstColor).isDark()
+            ? "var(--color-white)"
+            : "var(--color-black)"};
           font-family: var(--headings-font);
           font-weight: 500;
-          font-size: 14px;
+          font-size: 16px;
           align-self: flex-start;
-          max-width: 200px;
+          width: 100%;
           border-radius: 4px;
           cursor: pointer;
-          padding: 6px 8px;
+          padding: 8px 10px;
 
           &:hover {
-            opacity: 0.9;
+            background-color: ${tinycolor(firstColor)
+              .setAlpha(0.9)
+              .toRgbString()};
           }
           &:active {
-            opacity: 0.8;
+            background-color: ${tinycolor(firstColor)
+              .setAlpha(0.4)
+              .toRgbString()};
           }
         `}
-        onMouseUp={this.handleShowConfetti}
+        onClick={this.handleShowConfetti}
       >
         🎉 Confetti me
         <Confetti
