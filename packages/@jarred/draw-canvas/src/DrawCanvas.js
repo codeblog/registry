@@ -1,12 +1,15 @@
 // A handful of common packages are included for you automatically.
 // If you want to add dependencies, add it in "dependencies" in /Users/jarred/Code/codeblog/some-components/DrawCanvas.package.js
-import styled from "@emotion/styled";
 import React from "react";
+import { css } from "@emotion/core";
+import styled from "@emotion/styled";
+import tinycolor from "tinycolor2"; // This is a popular color library
 import DrawCanvas from "react-canvas-draw";
+import { throttle } from "lodash";
 
 const DRAW_CANVAS_DEFAULTS = {
   loadTimeOffset: 5,
-  lazyRadius: 10,
+  lazyRadius: 30,
   brushRadius: 4,
   brushColor: "#444",
   catenaryColor: "#0a0302",
@@ -22,7 +25,18 @@ const DRAW_CANVAS_DEFAULTS = {
 const Container = styled.div`
   position: relative;
   height: ${props => props.height || 200}px;
-  width: ${props => (props.width ? props.width + "px" : "100%")};
+
+  canvas {
+    max-width: 100%;
+    width: 100%;
+    object-fit: contain;
+  }
+
+  @media (max-width: 670px) {
+    width: 100vw;
+    margin-left: calc(-1 * var(--offset-normal));
+    margin-right: calc(-1 * var(--offset-normal));
+  }
 `;
 
 const GridLines = styled.div`
@@ -49,6 +63,20 @@ const GridLines = styled.div`
 // This is the React component that is shown your pad.
 // Since this is a Block component, be sure to render children. If you don't, things will break.
 export default class DrawSomething extends React.Component {
+  constructor(props) {
+    super(props);
+
+    if (props.isInEditor) {
+      this.state = {
+        width: 670
+      };
+    } else {
+      this.state = {
+        width: this.getWidth()
+      };
+    }
+  }
+
   saveData = () => {
     console.log("CALL");
     const saveData = this.canvasRef.getSaveData();
@@ -59,35 +87,62 @@ export default class DrawSomething extends React.Component {
     }
   };
 
+  getWidth = () => {
+    const docWidth = document.body.clientWidth;
+
+    if (docWidth < 700) {
+      return docWidth;
+    } else {
+      return 670;
+    }
+  };
+
+  calculateWidth = () => {
+    if (this.animationFrame) {
+      window.cancelAnimationFrame(this.animationFrame);
+    }
+
+    this.animationFrame = window.requestAnimationFrame(() => {
+      this.setState({
+        width: this.getWidth()
+      });
+    });
+  };
+
+  handleResize = throttle(() => {
+    this.calculateWidth();
+  }, 50);
+
   setCanvasRef = canvasRef => (this.canvasRef = canvasRef);
+
+  componentDidMount() {
+    window.addEventListener("resize", this.handleResize);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("resize", this.handleResize);
+    if (this.animationFrame) {
+      window.cancelAnimationFrame(this.animationFrame);
+    }
+
+    this.handleResize.cancel();
+  }
 
   render() {
     const {
       isInEditor,
-      onSave,
       data: { saveData = undefined },
-      brushColor,
-      isFocused,
-      isSelected
+      brushColor
     } = this.props;
-
-    let width = 650;
-    if (document.body.clientWidth < 600) {
-      width = document.body.clientWidth - 2;
-    }
 
     if (isInEditor) {
       return (
-        <Container
-          onMouseOut={this.saveData}
-          width={width}
-          ref={this.containerRef}
-        >
+        <Container onMouseOut={this.saveData} ref={this.containerRef}>
           <DrawCanvas
             {...DRAW_CANVAS_DEFAULTS}
             ref={this.setCanvasRef}
             saveData={saveData}
-            canvasWidth={width}
+            canvasWidth={this.state.width}
             brushColor={brushColor}
             immediateLoading
           />
@@ -97,13 +152,13 @@ export default class DrawSomething extends React.Component {
       );
     } else {
       return (
-        <Container width={width}>
+        <Container>
           <DrawCanvas
             {...DRAW_CANVAS_DEFAULTS}
             ref={this.setCanvasRef}
             disabled={false}
             saveData={saveData}
-            canvasWidth={width}
+            canvasWidth={this.state.width}
             brushColor={brushColor}
           />
           <GridLines />
