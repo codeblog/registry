@@ -4,11 +4,7 @@ import React from "react";
 import { css } from "@emotion/core";
 import { throttle } from "lodash";
 
-export const isVerticalPhoto = ({ width, height }) => height > width;
-export const isHorizontalPhoto = ({ width, height }) => width > height;
-export const isSquarePhoto = ({ width, height }) => width === height;
-
-export const calculateDimensions = ({
+const calculateDimensions = ({
   photo,
   maxWidth,
   maxHeight,
@@ -74,7 +70,7 @@ const HiddenInputCSS = css`
 
 // This is the React component that is shown your pad.
 // Since this is a Block component, be sure to render children. If you don't, things will break.
-export default ({
+const EditableImage = ({
   children,
   onSave,
   data: { width, height, file },
@@ -144,57 +140,62 @@ export default ({
     getDimensions();
   }, [file, width, height, setDimensions]);
 
-  if (isInEditor) {
-    return (
-      <div
-        css={css`
-          position: relative;
-          margin-block-start: var(--offset-normal);
-          margin-block-end: var(--offset-normal);
-          width: ${file ? dimensions.width + "px" : "auto"};
-          height: ${file ? dimensions.height + "px" : "auto"};
+  return (
+    <div
+      css={css`
+        position: relative;
+        margin-block-start: var(--offset-normal);
+        margin-block-end: var(--offset-normal);
+        width: ${file ? dimensions.width + "px" : "auto"};
+        height: ${file ? dimensions.height + "px" : "auto"};
 
-          @media (max-width: 670px) {
-            max-width: 100vw;
-            margin-left: calc(-1 * var(--offset-normal));
-            margin-right: calc(-1 * var(--offset-normal));
-          }
+        @media (max-width: 670px) {
+          max-width: 100vw;
+          margin-left: calc(-1 * var(--offset-normal));
+          margin-right: calc(-1 * var(--offset-normal));
+        }
 
-          max-width: 100%;
-        `}
-        className="Container"
-      >
-        {file && (
-          <img
-            // Codeblog uses Emotion (https://emotion.sh) for CSS.
-            // This makes it easy to have styles that apply per component instead of to the whole page
-            css={css`
-              border-radius: 2px;
-              max-width: 100%;
-              width: ${file ? dimensions.width + "px" : "auto"};
-              height: ${file ? dimensions.height + "px" : "auto"};
+        max-width: 100%;
+      `}
+      className="Container"
+    >
+      {file && (
+        <img
+          // Codeblog uses Emotion (https://emotion.sh) for CSS.
+          // This makes it easy to have styles that apply per component instead of to the whole page
+          css={css`
+            border-radius: 2px;
+            max-width: 100%;
+            width: ${file ? dimensions.width + "px" : "auto"};
+            height: ${file ? dimensions.height + "px" : "auto"};
 
-              @media (max-width: 670px) {
-                max-width: 100vw;
-                width: 100%;
-              }
-            `}
-            src={file}
-            width={dimensions.width}
-            height={dimensions.height}
-          />
-        )}
-        <input
-          type="file"
-          accept="image/*"
-          css={file && width && height ? HiddenInputCSS : undefined}
-          onChange={handleChangeFile}
+            @media (max-width: 670px) {
+              max-width: 100vw;
+              width: 100%;
+            }
+          `}
+          src={file}
           width={dimensions.width}
           height={dimensions.height}
         />
-      </div>
-    );
+      )}
+      <input
+        type="file"
+        accept="image/*"
+        css={file && width && height ? HiddenInputCSS : undefined}
+        onChange={handleChangeFile}
+        width={dimensions.width}
+        height={dimensions.height}
+      />
+    </div>
+  );
+};
+
+export default props => {
+  if (props.isInEditor) {
+    return <EditableImage {...props} />;
   } else {
+    const { file, width, height } = props.data;
     return (
       <a target="_blank" href={file}>
         <img
@@ -226,10 +227,3 @@ export default ({
     );
   }
 };
-
-// If you want to...
-// - Supply default props
-// - 🔎 Change how your component appears in search
-// - 🎨 Change the props you can edit from the editor (e.g. accept a URL or a color)
-// Edit this file:
-// 📦/Users/jarred/Code/codeblog/some-components/Image.package.js
