@@ -471,7 +471,7 @@
         return core.jsx("div", {
           css:
           /*#__PURE__*/
-          core.css("display:flex;margin-bottom:1em;align-items:center;justify-content:center;border:1px solid var(--color-primary);color:var(--color-primary);background-color:", firstColor, ";color:", tinycolor(firstColor).isDark() ? "var(--color-white)" : "var(--color-black)", ";font-family:var(--headings-font);font-weight:500;font-size:16px;align-self:flex-start;width:100%;border-radius:4px;cursor:pointer;padding:8px 10px;&:hover{background-color:", tinycolor(firstColor).setAlpha(0.9).toRgbString(), ";}&:active{background-color:", tinycolor(firstColor).setAlpha(0.4).toRgbString(), ";}" + ("")),
+          core.css("display:flex;margin-bottom:1em;align-items:center;justify-content:center;border:1px solid var(--color-primary);color:var(--color-primary);background-color:", firstColor, ";color:", tinycolor(firstColor).isDark() ? "var(--color-white)" : "var(--color-black)", ";font-family:var(--headings-font);font-weight:500;font-size:16px;align-self:flex-start;width:75%;flex:0.75;border-radius:4px;cursor:pointer;padding:8px 10px;&:hover{background-color:", tinycolor(firstColor).setAlpha(0.9).toRgbString(), ";}&:active{background-color:", tinycolor(firstColor).setAlpha(0.8).toRgbString(), ";}" + ("")),
           onClick: this.handleShowConfetti
         }, "\uD83C\uDF89 Confetti me", core.jsx(Confetti, {
           active: this.state.showConfetti,
