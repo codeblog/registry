@@ -53,7 +53,8 @@ export default class ConfettiButton extends React.Component {
           font-weight: 500;
           font-size: 16px;
           align-self: flex-start;
-          width: 100%;
+          width: 75%;
+          flex: 0.75;
           border-radius: 4px;
           cursor: pointer;
           padding: 8px 10px;
@@ -65,7 +66,7 @@ export default class ConfettiButton extends React.Component {
           }
           &:active {
             background-color: ${tinycolor(firstColor)
-              .setAlpha(0.4)
+              .setAlpha(0.8)
               .toRgbString()};
           }
         `}
