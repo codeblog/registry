@@ -1,7 +1,6 @@
 import _styled from '@emotion/styled-base';
 import { jsx } from '@emotion/core';
 import React, { PureComponent } from 'react';
-import 'tinycolor2';
 
 function _typeof(obj) {
   if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
@@ -3182,7 +3181,7 @@ var _default = (_temp = _class = function (_PureComponent) {
 
 var DRAW_CANVAS_DEFAULTS = {
   loadTimeOffset: 5,
-  lazyRadius: 30,
+  lazyRadius: 10,
   brushRadius: 4,
   brushColor: "#444",
   catenaryColor: "#0a0302",
