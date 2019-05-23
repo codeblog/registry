@@ -3187,7 +3187,7 @@
 
   var DRAW_CANVAS_DEFAULTS = {
     loadTimeOffset: 5,
-    lazyRadius: 30,
+    lazyRadius: 15,
     brushRadius: 4,
     brushColor: "#444",
     catenaryColor: "#0a0302",
@@ -3202,9 +3202,10 @@
 
   var Container = _styled("div", {
     target: "e5i1odf0"
-  })("position:relative;height:", function (props) {
-    return props.height || 200;
-  }, "px;canvas{max-width:100%;width:100%;object-fit:contain;}@media (max-width:670px){width:100vw;margin-left:calc(-1 * var(--offset-normal));margin-right:calc(-1 * var(--offset-normal));}" + (""));
+  })({
+    name: "1plxa1i",
+    styles: "position:relative;height:auto;& > div,canvas{max-width:100%;width:100% !important;object-fit:contain;}@media (max-width:670px){width:100vw;margin-left:calc(-1 * var(--offset-normal));margin-right:calc(-1 * var(--offset-normal));}"
+  });
 
   var GridLines = _styled("div", {
     target: "e5i1odf1"
@@ -3274,8 +3275,14 @@
           width: 670
         };
       } else {
+        var width = _this.getWidth();
+
+        if (width < 10) {
+          width = 500;
+        }
+
         _this.state = {
-          width: _this.getWidth()
+          width: width
         };
       }
 
@@ -3286,6 +3293,7 @@
       key: "componentDidMount",
       value: function componentDidMount() {
         window.addEventListener("resize", this.handleResize);
+        this.calculateWidth();
       }
     }, {
       key: "componentWillUnmount",
@@ -3319,7 +3327,9 @@
             immediateLoading: true
           })), core.jsx(GridLines, null), this.props.children);
         } else {
-          return core.jsx(Container, null, core.jsx(_default, _extends({}, DRAW_CANVAS_DEFAULTS, {
+          return core.jsx(Container, {
+            ref: this.containerRef
+          }, core.jsx(_default, _extends({}, DRAW_CANVAS_DEFAULTS, {
             ref: this.setCanvasRef,
             disabled: false,
             saveData: saveData,
