@@ -2,7 +2,6 @@
 // If you want to add dependencies, add it in "dependencies" in /Users/jarred/Code/codeblog/some-components/Image.package.js
 import React from "react";
 import { css } from "@emotion/core";
-import { throttle } from "lodash";
 
 function getBase64File(file) {
   return new Promise((resolve, reject) => {
@@ -135,7 +134,7 @@ export default props => {
         height={height}
         // Codeblog uses Emotion (https://emotion.sh) for CSS.
         // This makes it easy to have styles that apply per component instead of to the whole page
-        css={imageCSS}
+        css={ImageCSS}
         src={file}
       />
     );
