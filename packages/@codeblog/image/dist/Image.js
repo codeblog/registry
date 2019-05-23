@@ -1,8 +1,8 @@
 (function (global, factory) {
-  typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('@emotion/core'), require('react'), require('lodash')) :
-  typeof define === 'function' && define.amd ? define(['@emotion/core', 'react', 'lodash'], factory) :
-  (global = global || self, global['@codeblog/image'] = factory(global['@emotion/core'], global.react, global.lodash));
-}(this, function (core, React, lodash) { 'use strict';
+  typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('@emotion/core'), require('react')) :
+  typeof define === 'function' && define.amd ? define(['@emotion/core', 'react'], factory) :
+  (global = global || self, global['@codeblog/image'] = factory(global['@emotion/core'], global.react));
+}(this, function (core, React) { 'use strict';
 
   React = React && React.hasOwnProperty('default') ? React['default'] : React;
 
@@ -314,7 +314,7 @@
         height: height // Codeblog uses Emotion (https://emotion.sh) for CSS.
         // This makes it easy to have styles that apply per component instead of to the whole page
         ,
-        css: imageCSS,
+        css: ImageCSS,
         src: file
       });
     }
