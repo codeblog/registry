@@ -1,6 +1,5 @@
 import { jsx } from '@emotion/core';
 import React from 'react';
-import 'lodash';
 
 function _classCallCheck(instance, Constructor) {
   if (!(instance instanceof Constructor)) {
@@ -310,7 +309,7 @@ var Image$1 = (function (props) {
       height: height // Codeblog uses Emotion (https://emotion.sh) for CSS.
       // This makes it easy to have styles that apply per component instead of to the whole page
       ,
-      css: imageCSS,
+      css: ImageCSS,
       src: file
     });
   }
