@@ -9,7 +9,7 @@ import { throttle } from "lodash";
 
 const DRAW_CANVAS_DEFAULTS = {
   loadTimeOffset: 5,
-  lazyRadius: 30,
+  lazyRadius: 15,
   brushRadius: 4,
   brushColor: "#444",
   catenaryColor: "#0a0302",
@@ -24,11 +24,12 @@ const DRAW_CANVAS_DEFAULTS = {
 
 const Container = styled.div`
   position: relative;
-  height: ${props => props.height || 200}px;
+  height: auto;
 
+  & > div,
   canvas {
     max-width: 100%;
-    width: 100%;
+    width: 100% !important;
     object-fit: contain;
   }
 
@@ -71,8 +72,13 @@ export default class DrawSomething extends React.Component {
         width: 670
       };
     } else {
+      let width = this.getWidth();
+      if (width < 10) {
+        width = 500;
+      }
+
       this.state = {
-        width: this.getWidth()
+        width: width
       };
     }
   }
@@ -117,6 +123,8 @@ export default class DrawSomething extends React.Component {
 
   componentDidMount() {
     window.addEventListener("resize", this.handleResize);
+
+    this.calculateWidth();
   }
 
   componentWillUnmount() {
@@ -152,7 +160,7 @@ export default class DrawSomething extends React.Component {
       );
     } else {
       return (
-        <Container>
+        <Container ref={this.containerRef}>
           <DrawCanvas
             {...DRAW_CANVAS_DEFAULTS}
             ref={this.setCanvasRef}
