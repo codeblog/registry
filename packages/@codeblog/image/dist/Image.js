@@ -6,6 +6,74 @@
 
   React = React && React.hasOwnProperty('default') ? React['default'] : React;
 
+  function _classCallCheck(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+      throw new TypeError("Cannot call a class as a function");
+    }
+  }
+
+  function _defineProperties(target, props) {
+    for (var i = 0; i < props.length; i++) {
+      var descriptor = props[i];
+      descriptor.enumerable = descriptor.enumerable || false;
+      descriptor.configurable = true;
+      if ("value" in descriptor) descriptor.writable = true;
+      Object.defineProperty(target, descriptor.key, descriptor);
+    }
+  }
+
+  function _createClass(Constructor, protoProps, staticProps) {
+    if (protoProps) _defineProperties(Constructor.prototype, protoProps);
+    if (staticProps) _defineProperties(Constructor, staticProps);
+    return Constructor;
+  }
+
+  function _defineProperty(obj, key, value) {
+    if (key in obj) {
+      Object.defineProperty(obj, key, {
+        value: value,
+        enumerable: true,
+        configurable: true,
+        writable: true
+      });
+    } else {
+      obj[key] = value;
+    }
+
+    return obj;
+  }
+
+  function _inherits(subClass, superClass) {
+    if (typeof superClass !== "function" && superClass !== null) {
+      throw new TypeError("Super expression must either be null or a function");
+    }
+
+    subClass.prototype = Object.create(superClass && superClass.prototype, {
+      constructor: {
+        value: subClass,
+        writable: true,
+        configurable: true
+      }
+    });
+    if (superClass) _setPrototypeOf(subClass, superClass);
+  }
+
+  function _getPrototypeOf(o) {
+    _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) {
+      return o.__proto__ || Object.getPrototypeOf(o);
+    };
+    return _getPrototypeOf(o);
+  }
+
+  function _setPrototypeOf(o, p) {
+    _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) {
+      o.__proto__ = p;
+      return o;
+    };
+
+    return _setPrototypeOf(o, p);
+  }
+
   function _objectWithoutPropertiesLoose(source, excluded) {
     if (source == null) return {};
     var target = {};
@@ -40,6 +108,22 @@
     }
 
     return target;
+  }
+
+  function _assertThisInitialized(self) {
+    if (self === void 0) {
+      throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+    }
+
+    return self;
+  }
+
+  function _possibleConstructorReturn(self, call) {
+    if (call && (typeof call === "object" || typeof call === "function")) {
+      return call;
+    }
+
+    return _assertThisInitialized(self);
   }
 
   function _slicedToArray(arr, i) {
@@ -80,41 +164,6 @@
     throw new TypeError("Invalid attempt to destructure non-iterable instance");
   }
 
-  var calculateDimensions = function calculateDimensions(_ref2) {
-    var photo = _ref2.photo,
-        maxWidth = _ref2.maxWidth,
-        maxHeight = _ref2.maxHeight,
-        _ref2$totalPhotoCount = _ref2.totalPhotoCount,
-        totalPhotoCount = _ref2$totalPhotoCount === void 0 ? 1 : _ref2$totalPhotoCount,
-        defaultSpacing = _ref2.defaultSpacing;
-    var MAX_COLUMN_COUNT = Math.min(totalPhotoCount, 3);
-    var spacing = totalPhotoCount > 1 ? defaultSpacing : 0;
-    var width,
-        height = 0;
-
-    if (photo.width > photo.height) {
-      var MAX_SIZE = maxWidth / MAX_COLUMN_COUNT - spacing * MAX_COLUMN_COUNT;
-      width = Math.min(photo.width, MAX_SIZE) - spacing;
-      height = photo.height * (width / photo.width);
-    } else if (photo.height > photo.width) {
-      var _MAX_SIZE = maxHeight / MAX_COLUMN_COUNT - spacing * MAX_COLUMN_COUNT;
-
-      height = Math.min(photo.height, _MAX_SIZE);
-      width = photo.width * (height / photo.height);
-    } else {
-      var _MAX_SIZE2 = maxHeight / MAX_COLUMN_COUNT - spacing * MAX_COLUMN_COUNT;
-
-      width = Math.min(photo.width, _MAX_SIZE2) - spacing;
-      height = Math.min(photo.height, _MAX_SIZE2) - spacing;
-    }
-
-    return {
-      width: width,
-      height: height,
-      spacing: spacing
-    };
-  };
-
   function getBase64File(file) {
     return new Promise(function (resolve, reject) {
       var reader = new FileReader();
@@ -147,124 +196,110 @@
     });
   }
 
-  var HiddenInputCSS = {
-    name: "1piuz33",
-    styles: "width:100%;height:100%;display:block;opacity:0;position:absolute;top:0;bottom:0;left:0;right:0;"
-  }; // This is the React component that is shown your pad.
-  // Since this is a Block component, be sure to render children. If you don't, things will break.
-
-  var EditableImage = function EditableImage(_ref3) {
-    var children = _ref3.children,
-        onSave = _ref3.onSave,
-        _ref3$data = _ref3.data,
-        width = _ref3$data.width,
-        height = _ref3$data.height,
-        file = _ref3$data.file,
-        isInEditor = _ref3.isInEditor,
-        otherProps = _objectWithoutProperties(_ref3, ["children", "onSave", "data", "isInEditor"]);
-
-    var handleChangeFile = React.useCallback(function (evt) {
-      var file = event.target.files[0];
-      var filesize = (file.size / 1024 / 1024).toFixed(4);
-
-      if (filesize >= 10) {
-        window.alert("Please choose a photo under 10 MB", {
-          appearance: "error"
-        });
-        return;
-      }
-
-      window.requestIdleCallback(function () {
-        Promise.all([getBase64File(file), getImageDimensions(file)]).then(function (_ref4) {
-          var _ref5 = _slicedToArray(_ref4, 2),
-              img = _ref5[0],
-              _ref5$ = _ref5[1],
-              width = _ref5$.width,
-              height = _ref5$.height;
-
-          if (onSave) {
-            onSave({
-              file: img,
-              width: width,
-              height: height
-            });
-          }
-        });
-      });
-    }, [onSave]);
-
-    var _React$useState = React.useState({
-      width: width,
-      height: height
-    }),
-        _React$useState2 = _slicedToArray(_React$useState, 2),
-        dimensions = _React$useState2[0],
-        setDimensions = _React$useState2[1];
-
-    var getDimensions = function getDimensions() {
-      var maxWidth;
-      var docWidth = document.body.clientWidth;
-
-      if (docWidth < 700) {
-        maxWidth = docWidth;
-      } else {
-        maxWidth = 670;
-      }
-
-      setDimensions(calculateDimensions({
-        photo: {
-          width: width,
-          height: height
-        },
-        totalPhotoCount: 1,
-        maxHeight: 400,
-        maxWidth: maxWidth
-      }));
-    };
-
-    React.useEffect(function () {
-      var frame;
-      var handleResize = lodash.throttle(function () {
-        console.log("RESIZE");
-        frame = window.requestAnimationFrame(getDimensions);
-      }, 50);
-      window.addEventListener("resize", handleResize);
-      return function () {
-        window.removeEventListener("resize", handleResize);
-        window.cancelAnimationFrame(frame);
-      };
-    }, []);
-    React.useLayoutEffect(function () {
-      getDimensions();
-    }, [file, width, height, setDimensions]);
-    return core.jsx("div", {
-      css:
-      /*#__PURE__*/
-      core.css("position:relative;margin-block-start:var(--offset-normal);margin-block-end:var(--offset-normal);width:", file ? dimensions.width + "px" : "auto", ";height:", file ? dimensions.height + "px" : "auto", ";@media (max-width:670px){max-width:100vw;margin-left:calc(-1 * var(--offset-normal));margin-right:calc(-1 * var(--offset-normal));}max-width:100%;" + ("")),
-      className: "Container"
-    }, file && core.jsx("img", {
-      // Codeblog uses Emotion (https://emotion.sh) for CSS.
-      // This makes it easy to have styles that apply per component instead of to the whole page
-      css:
-      /*#__PURE__*/
-      core.css("border-radius:2px;max-width:100%;width:", file ? dimensions.width + "px" : "auto", ";height:", file ? dimensions.height + "px" : "auto", ";@media (max-width:670px){max-width:100vw;width:100%;}" + ("")),
-      src: file,
-      width: dimensions.width,
-      height: dimensions.height
-    }), core.jsx("input", {
-      type: "file",
-      accept: "image/*",
-      css: file && width && height ? HiddenInputCSS : undefined,
-      onChange: handleChangeFile,
-      width: dimensions.width,
-      height: dimensions.height
-    }));
-  };
-
-  var _ref = {
+  var ImageCSS = {
     name: "1iucz9",
     styles: "margin-block-start:var(--offset-normal);margin-block-end:var(--offset-normal);max-width 100%;height:auto;text-decoration:none;width:auto;object-fit:contain;max-height:400px;border-radius:2px;object-fit:contain;@media (max-width:670px){max-width:100vw;margin-left:calc(-1 * var(--offset-normal));margin-right:calc(-1 * var(--offset-normal));}"
   };
+  var HiddenInputCSS = {
+    name: "1piuz33",
+    styles: "width:100%;height:100%;display:block;opacity:0;position:absolute;top:0;bottom:0;left:0;right:0;"
+  };
+
+  var _ref = {
+    name: "3v4y9r",
+    styles: "position:relative;height:auto;width:auto;"
+  };
+
+  var EditableImage =
+  /*#__PURE__*/
+  function (_React$Component) {
+    _inherits(EditableImage, _React$Component);
+
+    function EditableImage() {
+      var _getPrototypeOf2;
+
+      var _this;
+
+      _classCallCheck(this, EditableImage);
+
+      for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+        args[_key] = arguments[_key];
+      }
+
+      _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(EditableImage)).call.apply(_getPrototypeOf2, [this].concat(args)));
+
+      _defineProperty(_assertThisInitialized(_this), "handleChangeFile", function (evt) {
+        var file = event.target.files[0];
+        var filesize = (file.size / 1024 / 1024).toFixed(4);
+
+        if (filesize >= 10) {
+          window.alert("Please choose a photo under 10 MB", {
+            appearance: "error"
+          });
+          return;
+        }
+
+        _this.idleCallback = window.requestIdleCallback(function () {
+          Promise.all([getBase64File(file), getImageDimensions(file)]).then(function (_ref2) {
+            var _ref3 = _slicedToArray(_ref2, 2),
+                img = _ref3[0],
+                _ref3$ = _ref3[1],
+                width = _ref3$.width,
+                height = _ref3$.height;
+
+            if (_this.props.onSave) {
+              _this.props.onSave({
+                file: img,
+                width: width,
+                height: height
+              });
+            }
+          });
+        });
+      });
+
+      return _this;
+    }
+
+    _createClass(EditableImage, [{
+      key: "componentWillUnmount",
+      value: function componentWillUnmount() {
+        window.cancelAnimationFrame(this.idleCallback);
+      }
+    }, {
+      key: "render",
+      value: function render() {
+        var _this$props = this.props,
+            children = _this$props.children,
+            onSave = _this$props.onSave,
+            _this$props$data = _this$props.data,
+            width = _this$props$data.width,
+            height = _this$props$data.height,
+            file = _this$props$data.file,
+            isInEditor = _this$props.isInEditor,
+            otherProps = _objectWithoutProperties(_this$props, ["children", "onSave", "data", "isInEditor"]);
+
+        return core.jsx("div", {
+          css: _ref,
+          className: "Container"
+        }, file && core.jsx("img", {
+          // Codeblog uses Emotion (https://emotion.sh) for CSS.
+          // This makes it easy to have styles that apply per component instead of to the whole page
+          css: ImageCSS,
+          src: file,
+          width: width,
+          height: height
+        }), core.jsx("input", {
+          type: "file",
+          accept: "image/*",
+          css: file && width && height ? HiddenInputCSS : undefined,
+          onChange: this.handleChangeFile
+        }));
+      }
+    }]);
+
+    return EditableImage;
+  }(React.Component);
 
   var Image$1 = (function (props) {
     if (props.isInEditor) {
@@ -274,17 +309,14 @@
           file = _props$data.file,
           width = _props$data.width,
           height = _props$data.height;
-      return core.jsx("a", {
-        target: "_blank",
-        href: file
-      }, core.jsx("img", {
+      return core.jsx("img", {
         width: width,
         height: height // Codeblog uses Emotion (https://emotion.sh) for CSS.
         // This makes it easy to have styles that apply per component instead of to the whole page
         ,
-        css: _ref,
+        css: imageCSS,
         src: file
-      }));
+      });
     }
   });
 
