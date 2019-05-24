@@ -1,0 +1,1 @@
+{"name":"@jarred/caption","version":"1.0.0","license":"MIT","codeblog":{"title":"Caption","description":"Write in permanent marker","screenshot":"./caption.png","category":"block","editableProps":{},"defaultProps":{}},"dependencies":{},"publishConfig":{"registry":"http://npm.codeblog.codes/"},"main":"dist/Caption.js","browser":"dist/Caption.js","esm":"dist/Caption.esm.js"}
