@@ -16,7 +16,8 @@ export default ({ children, background, text, ...otherProps }) => (
       --background-color: ${tinycolor(background).isDark()
         ? "var(--color-white)"
         : "var(--color-black)"};
-      font-family: "Comic Sans MS";
+      font-family: "Comic Sans", "Comic Sans MS", "Chalkboard",
+        "ChalkboardSE-Regular", sans-serif;
 
       background-color: var(--text-color);
       border: solid 2px var(--background-color);
