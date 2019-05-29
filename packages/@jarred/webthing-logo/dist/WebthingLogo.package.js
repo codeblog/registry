@@ -14,6 +14,7 @@ module.exports = {
     // If you use CategoryType.text, the component will be used on existing text, e.g. Glitter or Highlight. This is an inline.
     // if you use CategoryType.header, the component will be used on a new block, e.g. the Fancy Header or Quote.
     category: "embed",
+    isVoid: true,
     // Optional: This lets you visually edit the props of a component in the editor
     editableProps: {},
     // This lets you set default props if you want
