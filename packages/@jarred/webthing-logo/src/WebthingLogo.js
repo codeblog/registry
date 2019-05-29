@@ -42,8 +42,14 @@ export default ({ children, color, ...otherProps }) => (
       >
         Webthing
       </span>
-    </span>{" "}
-    {children}
+      <span
+        css={css`
+          display: none;
+        `}
+      >
+        {children}
+      </span>
+    </span>
   </>
 );
 
