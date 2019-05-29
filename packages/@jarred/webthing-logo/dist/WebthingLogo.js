@@ -54,10 +54,15 @@
     styles: "font-size:1.6em;font-weight:bold;font-family:var(--system-font);"
   };
 
-  var WebthingLogo = (function (_ref3) {
-    var children = _ref3.children,
-        color = _ref3.color,
-        otherProps = _objectWithoutProperties(_ref3, ["children", "color"]);
+  var _ref3 = {
+    name: "1hyfx7x",
+    styles: "display:none;"
+  };
+
+  var WebthingLogo = (function (_ref4) {
+    var children = _ref4.children,
+        color = _ref4.color,
+        otherProps = _objectWithoutProperties(_ref4, ["children", "color"]);
 
     return (// Since this is an inline component, it should be a `span` (or at least, `display: inline;`)
       core.jsx(React.Fragment, null, core.jsx("span", {
@@ -87,7 +92,9 @@
         d: "M0 0h24.466v28.349H0z"
       })))), core.jsx("span", {
         css: _ref2
-      }, "Webthing")), " ", children)
+      }, "Webthing"), core.jsx("span", {
+        css: _ref3
+      }, children)))
     );
   }); // If you want to...
   // - Supply default props
