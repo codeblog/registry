@@ -1,0 +1,1 @@
+{"name":"@jarred/slate","version":"1.0.0","license":"MIT","webthing":{"title":"Slate","description":"TODO: Description","screenshot":"./slate.png","category":"text","editableProps":{},"defaultProps":{}},"dependencies":{},"publishConfig":{"registry":"http://registry.webthing.co/"},"main":"dist/Slate.js","browser":"dist/Slate.js","esm":"dist/Slate.esm.js"}
