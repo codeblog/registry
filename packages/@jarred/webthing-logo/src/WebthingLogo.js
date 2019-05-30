@@ -37,7 +37,7 @@ export default ({ children, color, ...otherProps }) => (
         css={css`
           font-size: 1.6em;
           font-weight: bold;
-          font-family: var(--system-font);
+          font-family: var(--system-fonts);
         `}
       >
         Webthing
