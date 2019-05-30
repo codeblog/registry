@@ -1,0 +1,1 @@
+{"name":"@jarred/blues","version":"1.0.0","license":"MIT","webthing":{"title":"Blues","description":"TODO: Description","screenshot":"./blues.png","category":"header","editableProps":{},"defaultProps":{}},"dependencies":{},"publishConfig":{"registry":"http://registry.webthing.co/"},"main":"dist/Blues.js","browser":"dist/Blues.js","esm":"dist/Blues.esm.js"}
