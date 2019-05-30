@@ -1,0 +1,1 @@
+{"name":"@jarred/reddit","version":"1.0.0","license":"MIT","webthing":{"title":"Reddit","description":"TODO: Description","screenshot":"./reddit.png","category":"text","editableProps":{},"defaultProps":{"color":"pink"}},"dependencies":{},"publishConfig":{"registry":"http://registry.webthing.co/"},"main":"dist/Reddit.js","browser":"dist/Reddit.js","esm":"dist/Reddit.esm.js"}
