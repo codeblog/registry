@@ -1,0 +1,1 @@
+{"name":"@jarred/purple","version":"1.0.0","license":"MIT","webthing":{"title":"Purple","description":"TODO: Description","screenshot":"./purple.png","category":"text","editableProps":{},"defaultProps":{}},"dependencies":{},"publishConfig":{"registry":"http://registry.webthing.co/"},"main":"dist/Purple.js","browser":"dist/Purple.js","esm":"dist/Purple.esm.js"}
