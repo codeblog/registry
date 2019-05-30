@@ -1,0 +1,1 @@
+{"name":"@jarred/rainbow","version":"1.0.0","license":"MIT","webthing":{"title":"Rainbow","description":"TODO: Description","screenshot":"./rainbow.png","category":"text","editableProps":{},"defaultProps":{}},"dependencies":{},"publishConfig":{"registry":"http://registry.webthing.co/"},"main":"dist/Rainbow.js","browser":"dist/Rainbow.js","esm":"dist/Rainbow.esm.js"}
