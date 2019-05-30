@@ -1,0 +1,1 @@
+{"name":"@jarred/facebook","version":"1.0.0","license":"MIT","webthing":{"title":"Facebook","description":"TODO: Description","screenshot":"./facebook.png","category":"text","editableProps":{},"defaultProps":{}},"dependencies":{},"publishConfig":{"registry":"http://registry.webthing.co/"},"main":"dist/Facebook.js","browser":"dist/Facebook.js","esm":"dist/Facebook.esm.js"}
