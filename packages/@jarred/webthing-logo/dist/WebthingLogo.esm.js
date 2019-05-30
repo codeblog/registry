@@ -45,8 +45,8 @@ var _ref = {
 };
 
 var _ref2 = {
-  name: "d7wf3j",
-  styles: "font-size:1.6em;font-weight:bold;font-family:var(--system-font);"
+  name: "p20pvn",
+  styles: "font-size:1.6em;font-weight:bold;font-family:var(--system-fonts);"
 };
 
 var _ref3 = {
