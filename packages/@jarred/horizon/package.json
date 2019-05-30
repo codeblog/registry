@@ -1,0 +1,1 @@
+{"name":"@jarred/horizon","version":"1.0.0","license":"MIT","webthing":{"title":"Horizon","description":"TODO: Description","screenshot":"./horizon.png","category":"text","editableProps":{},"defaultProps":{}},"dependencies":{},"publishConfig":{"registry":"http://registry.webthing.co/"},"main":"dist/Horizon.js","browser":"dist/Horizon.js","esm":"dist/Horizon.esm.js"}
