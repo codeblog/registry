@@ -1,0 +1,1 @@
+{"name":"@jarred/radial","version":"1.0.0","license":"MIT","webthing":{"title":"Radial","description":"TODO: Description","screenshot":"./radial.png","category":"text","editableProps":{},"defaultProps":{}},"dependencies":{},"publishConfig":{"registry":"http://registry.webthing.co/"},"main":"dist/Radial.js","browser":"dist/Radial.js","esm":"dist/Radial.esm.js"}
