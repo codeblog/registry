@@ -253,8 +253,9 @@
           return;
         }
 
-        if (_this.containerRef && _this.containerRef.childElementCount === 1) {
+        if (_this.containerRef && _this.containerRef.childElementCount === 1 && _this.lastMountedID !== _this.props.id) {
           window.twttr.widgets.createTweet(_this.props.id, _this.containerRef);
+          _this.lastMountedID = _this.props.id;
         }
       });
 
@@ -304,6 +305,7 @@
       key: "render",
       value: function render() {
         return core.jsx("span", {
+          key: this.props.id,
           ref: this.setContainerRef
         });
       }
