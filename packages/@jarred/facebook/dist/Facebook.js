@@ -63,8 +63,8 @@
   // This example will render text in uppercase. SHOUTING ON THE INTERNET
 
   var _ref = {
-    name: "axl8za",
-    styles: "svg{width:1em;height:1em;}"
+    name: "jmunpc",
+    styles: "svg{width:1em;height:1em;}vertical-align:middle;s"
   };
 
   var Facebook = (function (_ref2) {
