@@ -16,6 +16,8 @@ export default ({ children, ...otherProps }) => (
         width: 1em;
         height: 1em;
       }
+
+      vertical-align: middle;s
     `}
   >
     <svg viewBox="0 0 266.893 266.895">
