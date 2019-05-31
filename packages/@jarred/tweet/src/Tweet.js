@@ -17,8 +17,6 @@ class Tweet extends React.Component {
     return this.props.id !== props.id;
   }
 
-  containerRef = React.createRef();
-
   componentDidMount() {
     if (window.twttr) {
       this.renderTweet();
@@ -43,7 +41,7 @@ class Tweet extends React.Component {
       return;
     }
 
-    if (this.containerRef) {
+    if (this.containerRef && this.containerRef.childElementCount === 1) {
       window.twttr.widgets.createTweet(this.props.id, this.containerRef);
     }
   };
