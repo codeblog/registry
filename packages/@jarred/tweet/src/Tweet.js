@@ -74,6 +74,9 @@ export default class TweetEmbed extends React.Component {
         <span
           css={css`
             opacity: 0;
+            height: 0;
+            visibility: hidden;
+            position: absolute;
           `}
         >
           {this.props.children}>
