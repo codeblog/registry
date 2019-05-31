@@ -59,9 +59,6 @@ export default class TweetEmbed extends React.Component {
         <Tweet key={tweetID} id={tweetID} />
         <span
           css={css`
-            visibilty: hidden;
-            position: absolute;
-            height: 0;
             opacity: 0;
           `}
         >
