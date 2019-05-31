@@ -58,8 +58,8 @@ function _objectWithoutProperties(source, excluded) {
 // This example will render text in uppercase. SHOUTING ON THE INTERNET
 
 var _ref = {
-  name: "ghgrln",
-  styles: "svg{width:1em;height:1em;display:inline-block;}"
+  name: "1k1uasx",
+  styles: "svg{width:1em;height:1em;display:inline-block;}vertical-align:middle;"
 };
 
 var Reddit = (function (_ref2) {
