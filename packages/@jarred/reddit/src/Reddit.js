@@ -17,6 +17,8 @@ export default ({ children, color, ...otherProps }) => (
         height: 1em;
         display: inline-block;
       }
+
+      vertical-align: middle;
     `}
   >
     <svg viewBox="0 0 78 78" fill="none">
