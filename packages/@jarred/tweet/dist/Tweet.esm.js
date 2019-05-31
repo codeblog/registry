@@ -239,8 +239,6 @@ function (_React$Component) {
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(Tweet).call(this, props));
 
-    _defineProperty(_assertThisInitialized(_this), "containerRef", React.createRef());
-
     _defineProperty(_assertThisInitialized(_this), "renderTweet", function () {
       if (!_this.mounted) return;
 
@@ -250,7 +248,7 @@ function (_React$Component) {
         return;
       }
 
-      if (_this.containerRef) {
+      if (_this.containerRef && _this.containerRef.childElementCount === 1) {
         window.twttr.widgets.createTweet(_this.props.id, _this.containerRef);
       }
     });
