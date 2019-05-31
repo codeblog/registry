@@ -303,8 +303,8 @@
   }(React.Component);
 
   var _ref = {
-    name: "15pocw2",
-    styles: "visibilty:hidden;position:absolute;height:0;opacity:0;"
+    name: "q7lffx",
+    styles: "opacity:0;"
   };
 
   var TweetEmbed =
