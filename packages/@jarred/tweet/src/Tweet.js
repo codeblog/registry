@@ -7,22 +7,31 @@ import ScriptJS from "scriptjs";
 // This is the React component that is shown your pad.
 // This example will render text in uppercase. SHOUTING ON THE INTERNET
 class Tweet extends React.Component {
-  shouldComponentUpdate(props, state) {
+  constructor(props) {
+    super(props);
+
+    this.mounted = true;
+  }
+
+  shouldComponentUpdate(props) {
     return this.props.id !== props.id;
   }
+
   containerRef = React.createRef();
 
   componentDidMount() {
-    this.mounted = true;
-
     if (window.twttr) {
       this.renderTweet();
     } else {
-      ScriptJS(
-        "https://platform.twitter.com/widgets.js",
-        "tw",
-        this.renderTweet
+      ScriptJS("https://platform.twitter.com/widgets.js", "tw", () =>
+        this.renderTweet()
       );
+    }
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.id !== this.props.id) {
+      this.renderTweet();
     }
   }
 
@@ -34,11 +43,16 @@ class Tweet extends React.Component {
       return;
     }
 
-    if (this.containerRef.current) {
-      window.twttr.widgets.createTweet(
-        this.props.id,
-        this.containerRef.current
-      );
+    if (this.containerRef) {
+      window.twttr.widgets.createTweet(this.props.id, this.containerRef);
+    }
+  };
+
+  setContainerRef = containerRef => {
+    this.containerRef = containerRef;
+
+    if (this.props.id && containerRef) {
+      this.renderTweet();
     }
   };
 
@@ -47,7 +61,7 @@ class Tweet extends React.Component {
   }
 
   render() {
-    return <span ref={this.containerRef} />;
+    return <span ref={this.setContainerRef} />;
   }
 }
 
