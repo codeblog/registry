@@ -237,18 +237,12 @@
   function (_React$Component) {
     _inherits(Tweet, _React$Component);
 
-    function Tweet() {
-      var _getPrototypeOf2;
-
+    function Tweet(props) {
       var _this;
 
       _classCallCheck(this, Tweet);
 
-      for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-        args[_key] = arguments[_key];
-      }
-
-      _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(Tweet)).call.apply(_getPrototypeOf2, [this].concat(args)));
+      _this = _possibleConstructorReturn(this, _getPrototypeOf(Tweet).call(this, props));
 
       _defineProperty(_assertThisInitialized(_this), "containerRef", React.createRef());
 
@@ -261,28 +255,46 @@
           return;
         }
 
-        if (_this.containerRef.current) {
-          window.twttr.widgets.createTweet(_this.props.id, _this.containerRef.current);
+        if (_this.containerRef) {
+          window.twttr.widgets.createTweet(_this.props.id, _this.containerRef);
         }
       });
 
+      _defineProperty(_assertThisInitialized(_this), "setContainerRef", function (containerRef) {
+        _this.containerRef = containerRef;
+
+        if (_this.props.id && containerRef) {
+          _this.renderTweet();
+        }
+      });
+
+      _this.mounted = true;
       return _this;
     }
 
     _createClass(Tweet, [{
       key: "shouldComponentUpdate",
-      value: function shouldComponentUpdate(props, state) {
+      value: function shouldComponentUpdate(props) {
         return this.props.id !== props.id;
       }
     }, {
       key: "componentDidMount",
       value: function componentDidMount() {
-        this.mounted = true;
+        var _this2 = this;
 
         if (window.twttr) {
           this.renderTweet();
         } else {
-          script("https://platform.twitter.com/widgets.js", "tw", this.renderTweet);
+          script("https://platform.twitter.com/widgets.js", "tw", function () {
+            return _this2.renderTweet();
+          });
+        }
+      }
+    }, {
+      key: "componentDidUpdate",
+      value: function componentDidUpdate(prevProps) {
+        if (prevProps.id !== this.props.id) {
+          this.renderTweet();
         }
       }
     }, {
@@ -294,7 +306,7 @@
       key: "render",
       value: function render() {
         return core.jsx("span", {
-          ref: this.containerRef
+          ref: this.setContainerRef
         });
       }
     }]);
