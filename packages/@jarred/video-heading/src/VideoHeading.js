@@ -108,7 +108,14 @@ export default ({ children, fill, url }) => (
       }
     `}
   >
-    <video width="100%" muted autoPlay loop className="VideoContainer">
+    <video
+      playsInline
+      width="100%"
+      muted
+      autoPlay
+      loop
+      className="VideoContainer"
+    >
       <source src={url} type="video/mp4" />
     </video>
     {/* Don't forget to render children! If you forget, typing in your component won't work */}
