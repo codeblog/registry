@@ -11,7 +11,7 @@ export default ({ children, background, ...otherProps }) => (
     // Webthing uses Emotion (https://emotion.sh) for CSS.
     // This makes it easy to have styles that apply per component instead of to the whole page
     css={css`
-      font-size: 84px;
+      font-size: 2.75em;
     `}
   >
     {/* Don't forget to render children! If you forget, typing in your component won't work */}
