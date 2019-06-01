@@ -63,8 +63,8 @@
   // Since this is a Block component, be sure to render children. If you don't, things will break.
 
   var _ref = {
-    name: "1mix0mv",
-    styles: "font-size:84px;"
+    name: "iut47f",
+    styles: "font-size:2.75em;"
   };
 
   var BigWords = (function (_ref2) {
