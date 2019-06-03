@@ -59,6 +59,14 @@ export default ({ children, background, ...otherProps }) => {
             max-width: 400px;
           }
 
+          @media (max-width: 670px) {
+            max-width: 300px;
+          }
+
+          @media (max-width: 400px) {
+            max-width: auto;
+          }
+
           color: ${tinycolor(background).isDark()
             ? "var(--color-white, #eee)"
             : "var(--color-black, #111)"};
