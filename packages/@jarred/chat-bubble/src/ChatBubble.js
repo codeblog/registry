@@ -45,7 +45,6 @@ export default ({ children, background, ...otherProps }) => {
           font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
             Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
             "Segoe UI Symbol";
-          font-family: var(--system-font);
           font-size: 0.9em;
 
           &:before,
