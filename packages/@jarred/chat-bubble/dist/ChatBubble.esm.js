@@ -74,7 +74,7 @@ var ChatBubble = (function (_ref2) {
   }), jsx("p", {
     css:
     /*#__PURE__*/
-    css("margin-block-start:0em;margin-block-end:0em;word-wrap:break-word;line-height:24px;position:relative;padding:10px 20px;border-radius:16px;font-family:-apple-system,BlinkMacSystemFont,\"Segoe UI\",Roboto,Helvetica,Arial,sans-serif,\"Apple Color Emoji\",\"Segoe UI Emoji\",\"Segoe UI Symbol\";font-size:0.9em;&:before,&:after{content:\"\";position:absolute;bottom:0px;height:20px;}@media (min-width:670px){max-width:400px;}color:", tinycolor(background).isDark() ? "var(--color-white, #eee)" : "var(--color-black, #111)", ";background:", background, ";align-self:flex-end;" + ("")),
+    css("margin-block-start:0em;margin-block-end:0em;word-wrap:break-word;line-height:24px;position:relative;padding:10px 20px;border-radius:16px;font-family:-apple-system,BlinkMacSystemFont,\"Segoe UI\",Roboto,Helvetica,Arial,sans-serif,\"Apple Color Emoji\",\"Segoe UI Emoji\",\"Segoe UI Symbol\";font-size:0.9em;&:before,&:after{content:\"\";position:absolute;bottom:0px;height:20px;}@media (min-width:670px){max-width:400px;}@media (max-width:670px){max-width:300px;}@media (max-width:400px){max-width:auto;}color:", tinycolor(background).isDark() ? "var(--color-white, #eee)" : "var(--color-black, #111)", ";background:", background, ";align-self:flex-end;" + ("")),
     className: "ChatBubble"
   }, children));
 }); // If you want to...
