@@ -19,8 +19,8 @@ export default ({ children, fill, url }) => (
       padding-right: calc((100vw - var(--blog-post-width)) / 2);
       background-size: 100vw auto;
       font-size: 1.75em;
-      font-family: var(--headings-font);
       background-color: transparent;
+      flex-direction: column;
       border-top: 1px solid ${fill};
       border-bottom: 1px solid ${fill};
       width: 100%;
@@ -28,9 +28,15 @@ export default ({ children, fill, url }) => (
       padding-top: var(--offset-normal);
       padding-bottom: var(--offset-normal);
       margin-block-end: var(--offset-medium);
+      font-weight: 500;
+      font-family: var(--headings-font);
       overflow-x: hidden;
-
+      flex-direction: column;
       max-width: 100vw;
+      min-height: 150px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
 
       &::before {
         content: "";
@@ -60,20 +66,18 @@ export default ({ children, fill, url }) => (
       .Text {
         z-index: 2;
         position: relative;
-        --stroke-color: ${tinycolor(fill).isDark()
-          ? "var(--color-white)"
-          : "var(--color-black)"};
 
-        -webkit-text-stroke: 2px var(--stroke-color);
-        -moz-text-stroke: 2px var(--stroke-color);
-        text-stroke: 2px var(--stroke-color);
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex: 1;
+        align-items: center;
 
-        -webkit-background-clip: text;
-        -moz-background-clip: text;
-        background-clip: text;
-        -webkit-text-fill-color: ${fill};
-        text-fill-color: ${fill};
         font-size: 1.8em;
+
+        text-align: left;
+        color: ${fill};
+        text-shadow: 0 0 1px ${tinycolor(fill).isDark() ? "#fff" : "#000"};
       }
 
       @media (max-width: 670px) {
