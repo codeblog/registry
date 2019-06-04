@@ -1,84 +1,157 @@
 // A handful of common packages are included for you automatically.
 // If you want to add dependencies, add it in "dependencies" in /Users/jarred/Code/codeblog/jarred-components-word/ChatBubble.package.js
 import React from "react";
-import { css } from "@emotion/core";
+import { css, Global } from "@emotion/core";
+import styled from "@emotion/styled";
 import { WebthingContext } from "@webthing/core";
 import tinycolor from "tinycolor2"; // This is a popular color library
+import classNames from "classnames";
 
-// This is the React component that is shown your pad.
-// Since this is a Block component, be sure to render children. If you don't, things will break.
-export default ({ children, background, ...otherProps }) => {
-  const { post } = React.useContext(WebthingContext);
-  return (
-    <div
+const ChatBubble = styled.div`
+  display: flex;
+  position: relative;
+  margin-block-end: 2px;
+  p {
+    border-top-right-radius: 24px;
+    border-top-left-radius: 8px;
+
+    border-bottom-right-radius: 24px;
+    border-bottom-left-radius: 8px;
+  }
+
+  &.ChatBubble img {
+    visibility: hidden;
+  }
+
+  &.ChatBubble--last img {
+    visibility: visible;
+  }
+
+  &.ChatBubble--first p {
+    border-top-left-radius: 24px;
+  }
+
+  &.ChatBubble--last p {
+    border-bottom-left-radius: 24px;
+  }
+
+  &.ChatBubble--last p {
+  }
+
+  &.ChatBubble--last {
+    margin-block-end: var(--offset-normal);
+  }
+`;
+
+const Paragraph = styled.p`
+  margin-block-start: 0em;
+  margin-block-end: 0em;
+  word-wrap: break-word;
+  line-height: 24px;
+  position: relative;
+  padding: 10px 20px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
+    Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  font-size: 0.9em;
+
+  &:before,
+  &:after {
+    content: "";
+    position: absolute;
+    bottom: 0px;
+    height: 20px;
+  }
+
+  @media (min-width: 670px) {
+    max-width: 400px;
+  }
+
+  @media (max-width: 670px) {
+    max-width: 300px;
+  }
+
+  @media (max-width: 400px) {
+    max-width: auto;
+    padding: 10px;
+  }
+
+  align-self: flex-end;
+`;
+
+const Photo = styled.img`
+  border-radius: 50%;
+  margin-top: auto;
+  margin-right: var(--offset-small, 4px);
+  z-index: 2;
+
+  @media (min-width: 670px) {
+    margin-left: -24px;
+  }
+`;
+
+const isChatBubbleNode = node => {
+  return !!(node && node.dataset["componentId"] === "@jarred/chat-bubble");
+};
+
+const ChatBubbleNode = React.memo(
+  ({ isFirst, isLast, face, background, children }) => (
+    <ChatBubble
+      className={classNames("ChatBubble", {
+        "ChatBubble--first": isFirst,
+        "ChatBubble--last": isLast
+      })}
       // Webthing uses Emotion (https://emotion.sh) for CSS.
       // This makes it easy to have styles that apply per component instead of to the whole page
-      css={css`
-        display: flex;
-        position: relative;
-      `}
     >
-      {post.blog.photo_url && (
-        <img
-          src={post.blog.photo_url}
+      {face && (
+        <Photo
+          src={face}
           width={24}
           height={24}
-          key={post.blog.photo_url}
-          style={{
-            borderRadius: "50%",
-            marginTop: "auto",
-            marginRight: "var(--offset-small, 4px)",
-            zIndex: 2
-          }}
+          key={face}
           contentEditable={false}
         />
       )}
-      <p
-        css={css`
-          margin-block-start: 0em;
-          margin-block-end: 0em;
-          word-wrap: break-word;
-          line-height: 24px;
-          position: relative;
-          padding: 10px 20px;
-          border-radius: 16px;
-          font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-            Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
-            "Segoe UI Symbol";
-          font-size: 0.9em;
-
-          &:before,
-          &:after {
-            content: "";
-            position: absolute;
-            bottom: 0px;
-            height: 20px;
-          }
-
-          @media (min-width: 670px) {
-            max-width: 400px;
-          }
-
-          @media (max-width: 670px) {
-            max-width: 300px;
-          }
-
-          @media (max-width: 400px) {
-            max-width: auto;
-          }
-
-          color: ${tinycolor(background).isDark()
+      <Paragraph
+        style={{
+          color: tinycolor(background).isDark()
             ? "var(--color-white, #eee)"
-            : "var(--color-black, #111)"};
-          background: ${background};
-          align-self: flex-end;
-        `}
-        className="ChatBubble"
+            : "var(--color-black, #111)",
+          background
+        }}
       >
         {/* Don't forget to render children! If you forget, typing in your component won't work */}
         {children}
-      </p>
-    </div>
+      </Paragraph>
+    </ChatBubble>
+  )
+);
+
+// This is the React component that is shown your pad.
+// Since this is a Block component, be sure to render children. If you don't, things will break.
+export default ({
+  children,
+  background,
+  isSelected,
+  isFocused,
+  groupOffset = 0,
+  face,
+  isFirst = true,
+  isLast = true,
+  isInEditor,
+  ...otherProps
+}) => {
+  const { post } = React.useContext(WebthingContext);
+  const _face = face || post.blog.photo_url;
+  return (
+    <ChatBubbleNode
+      isFirst={isFirst}
+      isLast={isLast}
+      face={_face}
+      background={background}
+    >
+      {children}
+    </ChatBubbleNode>
   );
 };
 
