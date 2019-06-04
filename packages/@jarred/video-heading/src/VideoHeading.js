@@ -123,6 +123,7 @@ const VideoHeading = ({ children, fill, url, showDate, href, date }) => (
 
         text-align: left;
         color: ${fill};
+
         text-shadow: 0 0 1px ${tinycolor(fill).isDark() ? "#fff" : "#000"};
       }
 
@@ -176,7 +177,7 @@ const VideoHeading = ({ children, fill, url, showDate, href, date }) => (
         grid-row-gap: 5px;
         grid-template-rows: 22px 22px;
         z-index: 0;
-        opacity: 1;
+        opacity: 0.8;
       }
 
       .Row {
