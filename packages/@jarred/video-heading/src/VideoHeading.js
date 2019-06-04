@@ -176,8 +176,9 @@ const VideoHeading = ({ children, fill, url, showDate, href, date }) => (
         display: grid;
         grid-row-gap: 5px;
         grid-template-rows: 22px 22px;
-        z-index: 0;
         opacity: 0.8;
+        z-index: 3;
+        mix-blend-mode: color-burn;
       }
 
       .Row {
