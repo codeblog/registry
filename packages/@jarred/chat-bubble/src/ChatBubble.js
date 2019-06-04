@@ -1,11 +1,10 @@
 // A handful of common packages are included for you automatically.
 // If you want to add dependencies, add it in "dependencies" in /Users/jarred/Code/codeblog/jarred-components-word/ChatBubble.package.js
-import React from "react";
-import { css, Global } from "@emotion/core";
 import styled from "@emotion/styled";
-import { WebthingContext } from "@webthing/core";
-import tinycolor from "tinycolor2"; // This is a popular color library
+import { Webthing } from "@webthing/core";
 import classNames from "classnames";
+import React from "react";
+import tinycolor from "tinycolor2"; // This is a popular color library
 
 const ChatBubble = styled.div`
   display: flex;
@@ -141,17 +140,27 @@ export default ({
   isInEditor,
   ...otherProps
 }) => {
-  const { post } = React.useContext(WebthingContext);
-  const _face = face || post.blog.photo_url;
   return (
-    <ChatBubbleNode
-      isFirst={isFirst}
-      isLast={isLast}
-      face={_face}
-      background={background}
-    >
-      {children}
-    </ChatBubbleNode>
+    <Webthing>
+      {({ post } = { post }) => {
+        let _face = face;
+
+        if (!_face && post && post.blog && post.blog.photo_url) {
+          _face = post.blog.photo_url;
+        }
+
+        return (
+          <ChatBubbleNode
+            isFirst={isFirst}
+            isLast={isLast}
+            face={_face}
+            background={background}
+          >
+            {children}
+          </ChatBubbleNode>
+        );
+      }}
+    </Webthing>
   );
 };
 
