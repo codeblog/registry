@@ -1,13 +1,13 @@
 (function (global, factory) {
-  typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('@emotion/styled-base'), require('@emotion/core'), require('react'), require('@webthing/core'), require('tinycolor2'), require('classnames')) :
-  typeof define === 'function' && define.amd ? define(['@emotion/styled-base', '@emotion/core', 'react', '@webthing/core', 'tinycolor2', 'classnames'], factory) :
-  (global = global || self, global['@jarred/chat-bubble'] = factory(global['@emotion/styled-base'], global['@emotion/core'], global.react, global['@webthing/core'], global.tinycolor2, global.classnames));
-}(this, function (_styled, core, React, core$1, tinycolor, classNames) { 'use strict';
+  typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('@emotion/styled-base'), require('@emotion/core'), require('@webthing/core'), require('classnames'), require('react'), require('tinycolor2')) :
+  typeof define === 'function' && define.amd ? define(['@emotion/styled-base', '@emotion/core', '@webthing/core', 'classnames', 'react', 'tinycolor2'], factory) :
+  (global = global || self, global['@jarred/chat-bubble'] = factory(global['@emotion/styled-base'], global['@emotion/core'], global['@webthing/core'], global.classnames, global.react, global.tinycolor2));
+}(this, function (_styled, core, core$1, classNames, React, tinycolor) { 'use strict';
 
   _styled = _styled && _styled.hasOwnProperty('default') ? _styled['default'] : _styled;
+  classNames = classNames && classNames.hasOwnProperty('default') ? classNames['default'] : classNames;
   React = React && React.hasOwnProperty('default') ? React['default'] : React;
   tinycolor = tinycolor && tinycolor.hasOwnProperty('default') ? tinycolor['default'] : tinycolor;
-  classNames = classNames && classNames.hasOwnProperty('default') ? classNames['default'] : classNames;
 
   function _objectWithoutPropertiesLoose(source, excluded) {
     if (source == null) return {};
@@ -108,17 +108,25 @@
         isInEditor = _ref2.isInEditor,
         otherProps = _objectWithoutProperties(_ref2, ["children", "background", "isSelected", "isFocused", "groupOffset", "face", "isFirst", "isLast", "isInEditor"]);
 
-    var _React$useContext = React.useContext(core$1.WebthingContext),
-        post = _React$useContext.post;
+    return core.jsx(core$1.Webthing, null, function () {
+      var _ref3 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {
+        post: post
+      },
+          post = _ref3.post;
 
-    var _face = face || post.blog.photo_url;
+      var _face = face;
 
-    return core.jsx(ChatBubbleNode, {
-      isFirst: isFirst,
-      isLast: isLast,
-      face: _face,
-      background: background
-    }, children);
+      if (!_face && post && post.blog && post.blog.photo_url) {
+        _face = post.blog.photo_url;
+      }
+
+      return core.jsx(ChatBubbleNode, {
+        isFirst: isFirst,
+        isLast: isLast,
+        face: _face,
+        background: background
+      }, children);
+    });
   }); // If you want to...
   // - Supply default props
   // - 🔎 Change how your component appears in search
