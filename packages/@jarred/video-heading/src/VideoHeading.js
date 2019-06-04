@@ -143,7 +143,8 @@ const VideoHeading = ({ children, fill, url, showDate, href, date }) => (
         }
 
         .HomeVideo {
-          left: 48px;
+          margin-left: 20px;
+          width: 100%;
         }
       }
 
