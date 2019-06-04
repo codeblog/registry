@@ -1,9 +1,9 @@
 import _styled from '@emotion/styled-base';
 import { jsx } from '@emotion/core';
-import React from 'react';
-import { WebthingContext } from '@webthing/core';
-import tinycolor from 'tinycolor2';
+import { Webthing } from '@webthing/core';
 import classNames from 'classnames';
+import React from 'react';
+import tinycolor from 'tinycolor2';
 
 function _objectWithoutPropertiesLoose(source, excluded) {
   if (source == null) return {};
@@ -104,17 +104,25 @@ var ChatBubble$1 = (function (_ref2) {
       isInEditor = _ref2.isInEditor,
       otherProps = _objectWithoutProperties(_ref2, ["children", "background", "isSelected", "isFocused", "groupOffset", "face", "isFirst", "isLast", "isInEditor"]);
 
-  var _React$useContext = React.useContext(WebthingContext),
-      post = _React$useContext.post;
+  return jsx(Webthing, null, function () {
+    var _ref3 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {
+      post: post
+    },
+        post = _ref3.post;
 
-  var _face = face || post.blog.photo_url;
+    var _face = face;
 
-  return jsx(ChatBubbleNode, {
-    isFirst: isFirst,
-    isLast: isLast,
-    face: _face,
-    background: background
-  }, children);
+    if (!_face && post && post.blog && post.blog.photo_url) {
+      _face = post.blog.photo_url;
+    }
+
+    return jsx(ChatBubbleNode, {
+      isFirst: isFirst,
+      isLast: isLast,
+      face: _face,
+      background: background
+    }, children);
+  });
 }); // If you want to...
 // - Supply default props
 // - 🔎 Change how your component appears in search
