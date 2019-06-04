@@ -93,6 +93,19 @@ const VideoHeading = ({ children, fill, url, showDate, href, date }) => (
         opacity: 0.1;
       }
 
+      .VCRStatic {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        display: block;
+        z-index: 1;
+        opacity: 0.1;
+      }
+
       .Text {
         z-index: 2;
         position: relative;
@@ -190,6 +203,10 @@ const VideoHeading = ({ children, fill, url, showDate, href, date }) => (
     >
       <source src={url} type="video/mp4" />
     </video>
+    <img
+      src="https://storage.googleapis.com/codeblog-shrinecache/vcr-static.gif"
+      className="VCRStatic"
+    />
     {showDate && (
       <div className="HomeVideo">
         <div className="Row">
