@@ -104,6 +104,7 @@ const VideoHeading = ({ children, fill, url, showDate, href, date }) => (
         display: block;
         z-index: 1;
         opacity: 0.1;
+        pointer-events: none;
       }
 
       .Text {
@@ -162,6 +163,7 @@ const VideoHeading = ({ children, fill, url, showDate, href, date }) => (
 
       .HomeVideo {
         position: absolute;
+        pointer-events: none;
         width: var(--blog-post-width);
         left: 0;
         right: 0;
@@ -174,7 +176,7 @@ const VideoHeading = ({ children, fill, url, showDate, href, date }) => (
         grid-row-gap: 5px;
         grid-template-rows: 22px 22px;
         z-index: 0;
-        opacity: 0.8;
+        opacity: 1;
       }
 
       .Row {
