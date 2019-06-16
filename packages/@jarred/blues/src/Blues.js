@@ -13,7 +13,7 @@ export default ({ children, background, ...otherProps }) => (
     // This makes it easy to have styles that apply per component instead of to the whole page
     css={css`
       font-family: Impact, sans-serif;
-      font-size: 4em;
+      font-size: 2em;
       font-weight: bold;
       position: relative;
       z-index: 1;
@@ -26,7 +26,6 @@ export default ({ children, background, ...otherProps }) => (
       filter: progid:DXImageTransform.Microsoft.Glow(Color=#0000aa,Strength=1);
       text-shadow: 0.13em -0.13em 0px #0000aa;
       letter-spacing: -0.05em;
-      text-align: center;
     `}
   >
     {children}
