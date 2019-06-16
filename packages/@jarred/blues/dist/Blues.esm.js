@@ -60,8 +60,8 @@ function _objectWithoutProperties(source, excluded) {
 // Since this is a Block component, be sure to render children. If you don't, things will break.
 
 var _ref = {
-  name: "fra55",
-  styles: "font-family:Impact,sans-serif;font-size:4em;font-weight:bold;position:relative;z-index:1;display:inline-flex;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;color:#24c0fd;text-stroke:0.01em #0000aa;filter:progid:DXImageTransform.Microsoft.Glow(Color=#0000aa,Strength=1);text-shadow:0.13em -0.13em 0px #0000aa;letter-spacing:-0.05em;text-align:center;"
+  name: "6ezidw",
+  styles: "font-family:Impact,sans-serif;font-size:2em;font-weight:bold;position:relative;z-index:1;display:inline-flex;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;color:#24c0fd;text-stroke:0.01em #0000aa;filter:progid:DXImageTransform.Microsoft.Glow(Color=#0000aa,Strength=1);text-shadow:0.13em -0.13em 0px #0000aa;letter-spacing:-0.05em;"
 };
 
 var Blues = (function (_ref2) {
